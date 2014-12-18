@@ -1,0 +1,23 @@
+{
+  "name": "makeClass",
+  "main": "makeClass.js",
+  "version": "0.0.0",
+  "authors": [
+    "a@borovin.com"
+  ],
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lodash": "~2.4.1",
+    "deepExtend": "git@bitbucket.org:borovin/deepextend.git"
+  }
+}
