@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "lodash": "~2.4.1",
+    "lodash": "~3.1.0",
     "deepExtend": "https://github.com/borovin/deepExtend.git"
   }
 }
