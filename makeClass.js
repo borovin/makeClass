@@ -1,7 +1,7 @@
 define(function(require) {
         //requirements
         var deepExtend = require('bower_components/deepExtend/deepExtend'),
-            _ = require('bower_components/lodash/dist/lodash');
+            _ = require('bower_components/lodash/lodash');
 
         return function makeClass(parent) {
 
