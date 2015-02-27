@@ -20,6 +20,10 @@ define(function(require) {
                         if (_.isPlainObject(this[prop])){
                             this[prop] = deepExtend({}, this[prop]);
                         }
+
+                        if (_.isArray(this[prop])){
+                            this[prop] = _.cloneDeep(this[prop]);
+                        }
                     }
 
                     if (protoProps && _.has(protoProps, 'constructor')) {
