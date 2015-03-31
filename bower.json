@@ -18,6 +18,6 @@
   ],
   "dependencies": {
     "lodash": "^3.5.0",
-    "deepExtend": "https://github.com/borovin/deepExtend.git^1.0.0"
+    "deepExtend": "https://github.com/borovin/deepExtend.git#^1.0.0"
   }
 }
