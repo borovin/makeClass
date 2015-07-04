@@ -4,12 +4,24 @@ define(function(require) {
 
     var deepExtend = function(obj) {
 
-        _.each([].slice.call(arguments, 1), function(source) {
+        var cloneArray = function(arr){
+            return _.map(arr, function(item){
+                if (_.isPlainObject(item)) {
+                    return deepExtend({}, item);
+                } else if (_.isArray(item)) {
+                    return cloneArray(item);
+                } else {
+                    return item;
+                }
+            })
+        };
+
+        _.forEach([].slice.call(arguments, 1), function(source) {
             _.forOwn(source, function(value, key) {
                 if (_.isPlainObject(value)) {
                     obj[key] = deepExtend({}, obj[key], value);
                 } else if (_.isArray(value)) {
-                    obj[key] = _.cloneDeep(value);
+                    obj[key] = cloneArray(value);
                 } else {
                     obj[key] = value;
                 }

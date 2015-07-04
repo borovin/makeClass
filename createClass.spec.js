@@ -1,5 +1,5 @@
 define(function(require, exports, module) {
-
+    //requirements
     var createClass = require('./createClass.js');
 
     describe(module.id, function() {
@@ -46,8 +46,7 @@ define(function(require, exports, module) {
 
         it('Override string prop', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 string: 'a'
             });
 
@@ -63,8 +62,7 @@ define(function(require, exports, module) {
 
         it('Override number prop', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 number: 1
             });
 
@@ -80,8 +78,7 @@ define(function(require, exports, module) {
 
         it('Override bool prop', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 bool: true
             });
 
@@ -97,8 +94,7 @@ define(function(require, exports, module) {
 
         it('Override object prop', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 object: {
                     a: 'a',
                     c: 1
@@ -122,8 +118,7 @@ define(function(require, exports, module) {
 
         it('Get proto props from constructor', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 a: 'a'
             });
 
@@ -141,8 +136,7 @@ define(function(require, exports, module) {
 
         it('Changes does not affect another instances', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 object: {
                     a: 'a'
                 }
@@ -159,8 +153,7 @@ define(function(require, exports, module) {
 
         it('Changes does not affect another instances', function() {
 
-            var O = createClass(function() {
-            }, {
+            var O = createClass({
                 object: {
                     a: 'a'
                 },
@@ -180,10 +173,30 @@ define(function(require, exports, module) {
 
         });
 
+        it('Complex object pass by reference', function() {
+
+            var O1 = createClass({
+                a: 'a'
+            });
+
+            var O2 = createClass({
+                object: new O1,
+                array: [
+                    new O1
+                ]
+            });
+
+            var o1 = new O2;
+            var o2 = new O2;
+
+            expect(o2.object === o1.object).toBeTruthy();
+            expect(o2.array[0] === o1.array[0]).toBeTruthy();
+
+        });
+
         it('Instance of works correctly', function() {
 
-            var O = createClass(function() {
-            });
+            var O = createClass();
 
             var OO = O.extend({
                 a: 'a'
@@ -233,7 +246,7 @@ define(function(require, exports, module) {
 
         it('Super method', function() {
 
-            var O = createClass(function(){}, {
+            var O = createClass({
                 b: 1,
                 add: function() {
                     this.b++;
@@ -254,4 +267,5 @@ define(function(require, exports, module) {
             expect(o.b).toBe(3);
         });
     });
+
 });
