@@ -1,7 +1,8 @@
 {
-  "name": "makeClass",
-  "main": "makeClass.js",
-  "version": "0.0.0",
+  "name": "createClass",
+  "main": "createClass.js",
+  "version": "0.0.1",
+  "description": "js class builder",
   "authors": [
     "a@borovin.com"
   ],
@@ -13,11 +14,11 @@
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "karma.conf.js",
+    "package.json",
+    "Gruntfile.js"
   ],
   "dependencies": {
-    "lodash": "^3.5.0",
-    "deepExtend": "https://github.com/borovin/deepExtend.git#^1.0.0"
+    "lodash": "^3.9.0"
   }
 }

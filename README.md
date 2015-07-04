@@ -1,4 +1,4 @@
-makeClass
-=========
+createClass
+===========
 
-Yet another js class implementation
+Yet another js class builder
