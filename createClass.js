@@ -1,33 +1,7 @@
 define(function(require) {
 
-    var _ = require('bower_components/lodash/lodash.js');
-
-    var deepExtend = function(obj) {
-
-        var cloneArray = function(arr){
-            return _.map(arr, function(item){
-                if (_.isPlainObject(item)) {
-                    return deepExtend({}, item);
-                } else if (_.isArray(item)) {
-
-                }
-            })
-        };
-
-        _.each([].slice.call(arguments, 1), function(source) {
-            _.forOwn(source, function(value, key) {
-                if (_.isPlainObject(value)) {
-                    obj[key] = deepExtend({}, obj[key], value);
-                } else if (_.isArray(value)) {
-                    obj[key] = cloneArray(value);
-                } else {
-                    obj[key] = value;
-                }
-            });
-        });
-
-        return obj;
-    };
+    var _ = require('bower_components/lodash/lodash.js'),
+        deepExtend = require('bower_components/deepExtend/deepExtend.js');
 
     return function createClass(Parent) {
 

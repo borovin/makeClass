@@ -19,6 +19,7 @@
     "Gruntfile.js"
   ],
   "dependencies": {
-    "lodash": "^3.9.0"
+    "lodash": "^3.9.0",
+    "deepExtend": "https://github.com/borovin/deepExtend.git#^1.1.0"
   }
 }
