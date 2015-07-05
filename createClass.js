@@ -9,14 +9,12 @@ define(function(require) {
                 if (_.isPlainObject(item)) {
                     return deepExtend({}, item);
                 } else if (_.isArray(item)) {
-                    return cloneArray(item);
-                } else {
-                    return item;
+
                 }
             })
         };
 
-        _.forEach([].slice.call(arguments, 1), function(source) {
+        _.each([].slice.call(arguments, 1), function(source) {
             _.forOwn(source, function(value, key) {
                 if (_.isPlainObject(value)) {
                     obj[key] = deepExtend({}, obj[key], value);
@@ -75,10 +73,12 @@ define(function(require) {
             deepExtend(Child.prototype, proto);
         }
 
-        Child.prototype.constructor = constructor;
-        Child.prototype.super = Parent.prototype;
+        Child.prototype.constructor = Child;
+        Child.prototype.super = Parent;
 
-        return _.extend(Child, Parent, {
+        deepExtend(Child.prototype.super, Parent.prototype);
+
+        return deepExtend(Child, Parent, {
             extend: function() {
                 var args = [this].concat([].slice.call(arguments));
                 return createClass.apply(null, args);

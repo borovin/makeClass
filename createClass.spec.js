@@ -235,7 +235,7 @@ define(function(require, exports, module) {
 
             var OO = O.extend({
                 constructor: function() {
-                    this.super.constructor.apply(this, arguments);
+                    this.super.apply(this, arguments);
                 }
             });
 
