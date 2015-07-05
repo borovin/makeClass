@@ -8,7 +8,7 @@ define(function(require, exports, module) {
             expect(typeof createClass).toBe('function');
         });
 
-        it('createClass from function', function() {
+        it('Create class from function', function() {
 
             var O = createClass(function() {
                 this.a = 'a';
@@ -19,7 +19,7 @@ define(function(require, exports, module) {
             expect(o.a).toBe('a');
         });
 
-        it('createClass from object with constructor method', function() {
+        it('Create class from object with constructor method', function() {
 
             var O = createClass({
                 constructor: function() {
