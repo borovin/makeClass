@@ -44,6 +44,20 @@ define(function(require, exports, module) {
 
         });
 
+        it('Pass params to constructor', function() {
+
+            var O = createClass(function(params) {
+                this.a = params.a;
+            });
+
+            var o = new O({
+                a: 'a'
+            });
+
+            expect(o.a).toBe('a');
+
+        });
+
         it('Override string prop', function() {
 
             var O = createClass({

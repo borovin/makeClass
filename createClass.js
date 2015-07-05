@@ -26,6 +26,7 @@ define(function(require) {
             var args;
             if (this instanceof Child) {
                 args = instance ? arguments : arguments[0];
+                instance = true;
 
                 deepExtend(this, _.pick(this, function(prop){
                     return _.isPlainObject(prop) || _.isArray(prop);
