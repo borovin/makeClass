@@ -32,13 +32,13 @@ define(function(require, exports, module) {
             expect(o.a).toBe('a');
         });
 
-        it('Instantiate without view', function() {
+        it('Instantiate without new', function() {
 
             var O = createClass(function() {
                 this.a = 'a';
             });
 
-            var o = new O;
+            var o = O();
 
             expect(o.a).toBe('a');
 
