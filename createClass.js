@@ -49,9 +49,6 @@ define(function(require) {
         }
 
         Child.prototype.constructor = Child;
-        Child.prototype.super = Parent;
-
-        deepExtend(Child.prototype.super, Parent.prototype);
 
         return deepExtend(Child, Parent, {
             extend: function() {

@@ -249,7 +249,7 @@ define(function(require, exports, module) {
 
             var OO = O.extend({
                 constructor: function() {
-                    this.super.apply(this, arguments);
+                    O.apply(this, arguments);
                 }
             });
 
@@ -269,7 +269,7 @@ define(function(require, exports, module) {
 
             var OO = O.extend({
                 add: function() {
-                    this.super.add.apply(this, arguments);
+                    O.prototype.add.apply(this, arguments);
                     this.b++;
                 }
             });
