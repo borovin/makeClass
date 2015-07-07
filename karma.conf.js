@@ -31,6 +31,9 @@ module.exports = function(config) {
             'bower_components/**/*.spec.js'
         ],
 
+        junitReporter: {
+            outputFile: 'reporters/junit.xml'
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
