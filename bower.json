@@ -1,25 +1,26 @@
 {
   "name": "createClass",
-  "main": "createClass.js",
+  "main": "index.js",
   "version": "0.0.1",
   "description": "js class builder",
   "authors": [
     "a@borovin.com"
   ],
   "moduleType": [
-    "amd"
+    "node"
   ],
   "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "karma.conf.js",
+
+    "*.spec.js",
     "package.json",
-    "Gruntfile.js"
+    "karma.conf.js"
   ],
   "dependencies": {
     "lodash": "^3.9.0",
-    "deepExtend": "https://github.com/borovin/deepExtend.git#^1.1.0"
+    "deepExtend": "borovin/deepExtend#^1.2.0"
   }
 }
