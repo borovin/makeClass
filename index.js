@@ -1,5 +1,5 @@
 var _ = require('bower_components/lodash/lodash.js'),
-    deepExtend = require('bower_components/deepExtend/index.js');
+    set = require('bower_components/set/index.js');
 
 module.exports = function createClass(Parent) {
 
@@ -26,9 +26,11 @@ module.exports = function createClass(Parent) {
             args = instance ? arguments : arguments[0];
             instance = true;
 
-            deepExtend(this, _.pick(this, function(prop){
+            var deepProps = _.pick(this, function(prop){
                 return _.isPlainObject(prop) || _.isArray(prop);
-            }));
+            });
+
+            set(this, deepProps);
 
             constructor.apply(this, args);
 
@@ -43,15 +45,17 @@ module.exports = function createClass(Parent) {
     // Add prototype properties (instance properties) to the subclass,
     // if supplied.
     if (proto) {
-        deepExtend(Child.prototype, proto);
+        set(Child.prototype, proto);
     }
 
     Child.prototype.constructor = Child;
 
-    return deepExtend(Child, Parent, {
+    set(Child, Parent, {
         extend: function() {
             var args = [this].concat([].slice.call(arguments));
             return createClass.apply(null, args);
         }
     });
+
+    return Child;
 };

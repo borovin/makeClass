@@ -14,13 +14,12 @@
     "**/.*",
     "node_modules",
     "bower_components",
-
     "*.spec.js",
     "package.json",
     "karma.conf.js"
   ],
   "dependencies": {
-    "lodash": "^3.9.0",
-    "deepExtend": "borovin/deepExtend#^1.2.0"
+    "lodash": "^3.10.0",
+    "set": "borovin/set#^1.3.0"
   }
 }
