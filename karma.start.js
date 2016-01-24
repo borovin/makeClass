@@ -1,5 +1,5 @@
 var testFiles = Object.keys(window.__karma__.files).filter(function(file) {
-    return (file.indexOf('/tests/') > 0 && file.indexOf('/node_modules/') < 0);
+    return file.indexOf('/base/tests/') == 0;
 });
 
 var testImports = testFiles.map(function(testFile) {

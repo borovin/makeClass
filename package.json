@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "createClass",
   "main": "index.js",
   "description": "js class builder",
@@ -9,10 +9,9 @@
   },
   "homepage": "https://github.com/borovin/createClass",
   "scripts": {
-    "test": "node ./node_modules/karma/bin/karma start --single-run && node ./node_modules/eslint/bin/eslint.js tests/*.js index.js"
+    "test": "node ./node_modules/karma/bin/karma start --single-run && npm run lint -s",
+    "lint": "node ./node_modules/eslint/bin/eslint.js tests/*.js index.js"
   },
-  "author": "a@borovin.com",
-  "license": "MIT",
   "devDependencies": {
     "eslint": "^1.10.3",
     "eslint-config-yandex": "^1.0.5",
@@ -33,5 +32,7 @@
       "devDependencies"
     ],
     "npmAlgorithm": "flat"
-  }
+  },
+  "author": "a@borovin.com",
+  "license": "MIT"
 }
