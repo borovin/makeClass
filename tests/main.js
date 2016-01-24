@@ -1,50 +1,50 @@
-var createClass = require('./index.js');
+var createClass = require('../index');
 
-describe(module.id, function() {
+describe(module.id, function () {
 
-    it('createClass is function', function() {
+    it('createClass is function', function () {
         expect(typeof createClass).toBe('function');
     });
 
-    it('Create class from function', function() {
+    it('Create class from function', function () {
 
-        var O = createClass(function() {
+        var O = createClass(function () {
             this.a = 'a';
         });
 
-        var o = new O;
+        var o = new O();
 
         expect(o.a).toBe('a');
     });
 
-    it('Create class from object with constructor method', function() {
+    it('Create class from object with constructor method', function () {
 
         var O = createClass({
-            constructor: function() {
+            constructor: function () {
                 this.a = 'a';
             }
         });
 
-        var o = new O;
+        var o = new O();
 
         expect(o.a).toBe('a');
     });
 
-    it('Instantiate without new', function() {
+    it('Instantiate without new', function () {
 
-        var O = createClass(function() {
+        var _class = createClass(function () {
             this.a = 'a';
         });
 
-        var o = O();
+        var o = _class();
 
         expect(o.a).toBe('a');
 
     });
 
-    it('Pass params to constructor', function() {
+    it('Pass params to constructor', function () {
 
-        var O = createClass(function(params) {
+        var O = createClass(function (params) {
             this.a = params.a;
         });
 
@@ -56,7 +56,7 @@ describe(module.id, function() {
 
     });
 
-    it('Override string prop', function() {
+    it('Override string prop', function () {
 
         var O = createClass({
             string: 'a'
@@ -66,13 +66,13 @@ describe(module.id, function() {
             string: 'b'
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.string).toBe('b');
 
     });
 
-    it('Override number prop', function() {
+    it('Override number prop', function () {
 
         var O = createClass({
             number: 1
@@ -82,13 +82,13 @@ describe(module.id, function() {
             number: 2
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.number).toBe(2);
 
     });
 
-    it('Override bool prop', function() {
+    it('Override bool prop', function () {
 
         var O = createClass({
             bool: true
@@ -98,13 +98,13 @@ describe(module.id, function() {
             bool: false
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.bool).toBeFalsy();
 
     });
 
-    it('Override object prop', function() {
+    it('Override object prop', function () {
 
         var O = createClass({
             object: {
@@ -120,7 +120,7 @@ describe(module.id, function() {
             }
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.object.a).toBe('a');
         expect(o.object.b).toBe('b');
@@ -128,25 +128,25 @@ describe(module.id, function() {
 
     });
 
-    it('Get proto props from constructor', function() {
+    it('Get proto props from constructor', function () {
 
         var O = createClass({
             a: 'a'
         });
 
         var OO = O.extend({
-            constructor: function() {
+            constructor: function () {
                 this.b = this.a + 'b';
             }
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.b).toBe('ab');
 
     });
 
-    it('Changes does not affect another instances', function() {
+    it('Changes does not affect another instances', function () {
 
         var O = createClass({
             object: {
@@ -154,8 +154,8 @@ describe(module.id, function() {
             }
         });
 
-        var o1 = new O;
-        var o2 = new O;
+        var o1 = new O();
+        var o2 = new O();
 
         o1.object.a = 'b';
 
@@ -163,7 +163,7 @@ describe(module.id, function() {
 
     });
 
-    it('Changes does not affect another instances', function() {
+    it('Changes does not affect another instances', function () {
 
         var O = createClass({
             object: {
@@ -174,8 +174,8 @@ describe(module.id, function() {
             }]
         });
 
-        var o1 = new O;
-        var o2 = new O;
+        var o1 = new O();
+        var o2 = new O();
 
         o1.object.a = 'b';
         o1.array[0].a = 'b';
@@ -185,28 +185,28 @@ describe(module.id, function() {
 
     });
 
-    it('Complex object pass by reference', function() {
+    it('Complex object pass by reference', function () {
 
         var O1 = createClass({
             a: 'a'
         });
 
         var O2 = createClass({
-            object: new O1,
+            object: new O1(),
             array: [
-                new O1
+                new O1()
             ]
         });
 
-        var o1 = new O2;
-        var o2 = new O2;
+        var o1 = new O2();
+        var o2 = new O2();
 
         expect(o2.object === o1.object).toBeTruthy();
         expect(o2.array[0] === o1.array[0]).toBeTruthy();
 
     });
 
-    it('Instance of works correctly', function() {
+    it('Instance of works correctly', function () {
 
         var O = createClass();
 
@@ -214,65 +214,65 @@ describe(module.id, function() {
             a: 'a'
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o instanceof OO).toBe(true);
         expect(o instanceof O).toBe(true);
 
     });
 
-    it('Create new instance from constructor', function() {
+    it('Create new instance from constructor', function () {
 
-        var O = createClass(function() {
+        var O = createClass(function () {
             this.a = 'a';
         });
 
         var OO = O.extend({
-            clone: function() {
+            clone: function () {
                 return new this.constructor();
             }
         });
 
-        var o = new OO;
+        var o = new OO();
         var o1 = o.clone();
 
         expect(o1.a).toBe('a');
     });
 
-    it('Super constructor', function() {
+    it('Super constructor', function () {
 
-        var O = createClass(function() {
+        var O = createClass(function () {
             this.a = 'a';
         });
 
         var OO = O.extend({
-            constructor: function() {
+            constructor: function () {
                 O.apply(this, arguments);
             }
         });
 
-        var o = new OO;
+        var o = new OO();
 
         expect(o.a).toBe('a');
     });
 
-    it('Super method', function() {
+    it('Super method', function () {
 
         var O = createClass({
             b: 1,
-            add: function() {
+            add: function () {
                 this.b++;
             }
         });
 
         var OO = O.extend({
-            add: function() {
+            add: function () {
                 O.prototype.add.apply(this, arguments);
                 this.b++;
             }
         });
 
-        var o = new OO;
+        var o = new OO();
 
         o.add();
 

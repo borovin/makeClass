@@ -1,0 +1,8 @@
+{
+  "extends": "yandex",
+  "env": {
+    "commonjs": true,
+    "browser": true,
+    "jasmine": true
+  }
+}

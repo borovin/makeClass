@@ -1,17 +1,19 @@
-var _ = require('bower_components/lodash/lodash.js'),
-    set = require('bower_components/set/index.js');
+var _ = require('lodash');
+var set = require('set');
 
 module.exports = function createClass(Parent) {
 
-    var instance = true,
-        constructor,
-        proto;
+    var instance = true;
+    var constructor;
+    var proto;
+    var Child;
 
     if (typeof Parent === 'function') {
         proto = _.extend.apply(_, [{}].concat([].slice.call(arguments, 1)));
     } else {
         proto = _.extend.apply(_, [{}].concat([].slice.call(arguments)));
-        Parent = function(){};
+        Parent = function () {
+        };
     }
 
     if (proto && _.has(proto, 'constructor')) {
@@ -20,19 +22,23 @@ module.exports = function createClass(Parent) {
         constructor = Parent;
     }
 
-    var Child = function() {
+    Child = function () {
+
+        var child = this;
         var args;
-        if (this instanceof Child) {
+        var deepProps;
+
+        if (child instanceof Child) {
             args = instance ? arguments : arguments[0];
             instance = true;
 
-            var deepProps = _.pick(this, function(prop){
+            deepProps = _.pickBy(child, function (prop) {
                 return _.isPlainObject(prop) || _.isArray(prop);
             });
 
-            set(this, deepProps);
+            set(child, deepProps);
 
-            constructor.apply(this, args);
+            constructor.apply(child, args);
 
         } else {
             instance = false;
@@ -51,7 +57,7 @@ module.exports = function createClass(Parent) {
     Child.prototype.constructor = Child;
 
     set(Child, Parent, {
-        extend: function() {
+        extend: function () {
             var args = [this].concat([].slice.call(arguments));
             return createClass.apply(null, args);
         }
