@@ -14,7 +14,7 @@
 
 // Karma configuration
 
-module.exports = function(config) {
+module.exports = function (config) {
     config.set({
         basePath: './',
         frameworks: ['jasmine'],
@@ -22,15 +22,15 @@ module.exports = function(config) {
             'node_modules/phantomjs-polyfill/bind-polyfill.js',
             'node_modules/steal/steal.js',
             'karma.bootstrap.js',
-            { pattern: 'karma.start.js', included: false },
-            { pattern: 'index.js', included: false },
-            { pattern: 'tests/**/*.js', included: false },
-            { pattern: 'node_modules/**/*.js', included: false },
-            { pattern: 'node_modules/**/package.json', included: false },
-            { pattern: 'package.json', included: false }
+            {pattern: 'karma.start.js', included: false},
+            {pattern: 'index.js', included: false},
+            {pattern: 'tests/**/*.js', included: false},
+            {pattern: 'node_modules/**/*.js', included: false},
+            {pattern: 'node_modules/**/package.json', included: false},
+            {pattern: 'package.json', included: false}
         ],
-        exclude: [ ],
-        preprocessors: { },
+        exclude: [],
+        preprocessors: {},
         reporters: ['mocha'],
         port: 9876,
         colors: true,
@@ -39,5 +39,5 @@ module.exports = function(config) {
         browsers: ['PhantomJS'],
         singleRun: true,
         concurrency: Infinity
-    })
+    });
 };

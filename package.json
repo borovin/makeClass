@@ -9,8 +9,9 @@
   },
   "homepage": "https://github.com/borovin/createClass",
   "scripts": {
-    "test": "node ./node_modules/karma/bin/karma start --single-run && npm run lint -s",
-    "lint": "node ./node_modules/eslint/bin/eslint.js tests/*.js index.js"
+    "test": "npm run karma -s && npm run lint -s",
+    "karma": "node ./node_modules/karma/bin/karma start --single-run",
+    "lint": "node ./node_modules/eslint/bin/eslint.js ."
   },
   "devDependencies": {
     "eslint": "^1.10.3",
