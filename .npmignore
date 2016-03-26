@@ -1,3 +1,4 @@
-.travis.yml
-karma.*.js
-tests
+testem.js
+app.js
+_*
+.*

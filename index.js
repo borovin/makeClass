@@ -1,67 +1,54 @@
-var _ = require('lodash');
-var set = require('set');
+import set from 'set';
+import { has, extend, pickBy, isPlainObject, isArray } from 'lodash-es';
 
-module.exports = function createClass(Parent) {
+export default function createClass(...args) {
+  let constructor;
+  let Parent = args[0];
+  let proto;
 
-    var instance = true;
-    var constructor;
-    var proto;
-    var Child;
-
-    if (typeof Parent === 'function') {
-        proto = _.extend.apply(_, [{}].concat([].slice.call(arguments, 1)));
-    } else {
-        proto = _.extend.apply(_, [{}].concat([].slice.call(arguments)));
-        Parent = function () {
-        };
-    }
-
-    if (proto && _.has(proto, 'constructor')) {
-        constructor = proto.constructor;
-    } else {
-        constructor = Parent;
-    }
-
-    Child = function () {
-
-        var child = this;
-        var args;
-        var deepProps;
-
-        if (child instanceof Child) {
-            args = instance ? arguments : arguments[0];
-            instance = true;
-
-            deepProps = _.pickBy(child, function (prop) {
-                return _.isPlainObject(prop) || _.isArray(prop);
-            });
-
-            set(child, deepProps);
-
-            constructor.apply(child, args);
-
-        } else {
-            instance = false;
-            return new Child(arguments);
-        }
+  if (typeof Parent === 'function') {
+    proto = extend(...args.slice(1));
+  } else {
+    proto = extend(Parent, ...args);
+    Parent = function _Parent() {
     };
+  }
 
-    Child.prototype = Object.create(Parent.prototype);
+  if (proto && has(proto, 'constructor')) {
+    constructor = proto.constructor;
+  } else {
+    constructor = Parent;
+  }
 
-    // Add prototype properties (instance properties) to the subclass,
-    // if supplied.
-    if (proto) {
-        set(Child.prototype, proto);
+  function Child(...params) {
+    const child = this;
+
+    if (!(child instanceof Child)) {
+      return new Child(...params);
     }
 
-    Child.prototype.constructor = Child;
+    const deepProps = pickBy(child, prop => isPlainObject(prop) || isArray(prop));
 
-    set(Child, Parent, {
-        extend: function () {
-            var args = [this].concat([].slice.call(arguments));
-            return createClass.apply(null, args);
-        }
-    });
+    set(child, deepProps);
 
-    return Child;
-};
+    constructor.apply(child, params);
+
+    return child;
+  }
+
+  Child.prototype = Object.create(Parent.prototype);
+
+  if (proto) {
+    set(Child.prototype, proto);
+  }
+
+  Child.prototype.constructor = Child;
+
+  set(Child, Parent, {
+    extend(...params) {
+      return createClass(this, ...params);
+    },
+  });
+
+  return Child;
+}
