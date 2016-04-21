@@ -16,7 +16,7 @@
     "playground": "github:borovin/playground"
   },
   "dependencies": {
-    "steal": "^0.15.0"
+    "steal": "^0.16.0"
   },
   "system": {
     "npmIgnore": [
