@@ -11,10 +11,12 @@
   "scripts": {
     "test": "nyc ava",
     "lint": "node ./node_modules/eslint/bin/eslint.js .",
-    "report": "nyc report --reporter=html"
+    "report": "nyc report --reporter=html",
+    "coverage": "nyc report --reporter=text-lcov | codacy-coverage"
   },
   "devDependencies": {
     "ava": "^0.15.2",
+    "codacy-coverage": "^1.1.3",
     "eslint": "^2.0.0",
     "eslint-config-airbnb": "^6.0.2",
     "nyc": "^6.4.4"
