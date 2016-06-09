@@ -1,54 +1,23 @@
-import set from 'set';
-import { has, extend, pickBy, isPlainObject, isArray } from 'lodash-es';
+const merge = require('lodash/merge');
 
-export default function createClass(...args) {
-  let constructor;
-  let Parent = args[0];
-  let proto;
-
-  if (typeof Parent === 'function') {
-    proto = extend(...args.slice(1));
-  } else {
-    proto = extend(Parent, ...args);
-    Parent = function _Parent() {
-    };
-  }
-
-  if (proto && has(proto, 'constructor')) {
-    constructor = proto.constructor;
-  } else {
-    constructor = Parent;
-  }
+module.exports = function createClass(...mixins) {
+  const proto = merge(...mixins);
 
   function Child(...params) {
-    const child = this;
-
-    if (!(child instanceof Child)) {
+    if (!(this instanceof Child)) {
       return new Child(...params);
     }
 
-    const deepProps = pickBy(child, prop => isPlainObject(prop) || isArray(prop));
-
-    set(child, deepProps);
-
-    constructor.apply(child, params);
-
-    return child;
+    if (proto.constructor) {
+      proto.constructor.apply(this, params);
+    }
   }
 
-  Child.prototype = Object.create(Parent.prototype);
-
-  if (proto) {
-    set(Child.prototype, proto);
-  }
+  Child.prototype = Object.create(proto);
 
   Child.prototype.constructor = Child;
 
-  set(Child, Parent, {
-    extend(...params) {
-      return createClass(this, ...params);
-    },
-  });
+  Child.extend = (...params) => createClass(Child.prototype, ...params);
 
   return Child;
-}
+};

@@ -9,21 +9,19 @@
   },
   "homepage": "https://github.com/borovin/createClass",
   "scripts": {
-    "start": "node app.js",
-    "test": "npm run testem-ci && npm run lint -s",
-    "testem": "node ./node_modules/testem/testem.js",
-    "testem-ci": "node ./node_modules/testem/testem.js ci -P 5",
-    "lint": "node ./node_modules/eslint/bin/eslint.js ."
+    "test": "nyc ava",
+    "lint": "node ./node_modules/eslint/bin/eslint.js .",
+    "report": "nyc report --reporter=html"
   },
   "devDependencies": {
+    "ava": "^0.15.2",
     "eslint": "^2.0.0",
     "eslint-config-airbnb": "^6.0.2",
-    "testem": "^1.2.2"
+    "nyc": "^6.4.4"
   },
   "dependencies": {
-    "lodash-es": "^4.6.1",
-    "set": "github:borovin/set",
-    "steal": "^0.15.0"
+    "lodash": "^4.13.1",
+    "steal": "^0.16.0"
   },
   "system": {
     "npmIgnore": [
