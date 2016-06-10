@@ -1,7 +1,7 @@
-const merge = require('lodash/merge');
+const merge = require('lodash.merge');
 
 module.exports = function createClass(...mixins) {
-  const proto = merge(...mixins);
+  const proto = merge({}, ...mixins);
 
   function Child(...params) {
     if (!(this instanceof Child)) {
@@ -14,10 +14,13 @@ module.exports = function createClass(...mixins) {
   }
 
   Child.prototype = Object.create(proto);
-
   Child.prototype.constructor = Child;
 
-  Child.extend = (...params) => createClass(Child.prototype, ...params);
+  Child.extend = (...params) => {
+    const ExtendedClass = createClass(Child.prototype, ...params);
+    merge(ExtendedClass, Child);
+    return ExtendedClass;
+  };
 
   return Child;
 };
