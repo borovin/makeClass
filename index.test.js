@@ -3,7 +3,7 @@ const createClass = require('./index');
 
 test('create base class', t => {
   const BaseClass = createClass({
-    a: 1
+    a: 1,
   });
 
   const baseClass = new BaseClass();
@@ -13,7 +13,7 @@ test('create base class', t => {
 
 test('init without new', t => {
   const baseClass = createClass({
-    a: 1
+    a: 1,
   });
 
   const instance = baseClass();
@@ -23,7 +23,7 @@ test('init without new', t => {
 
 test('extend class', t => {
   const BaseClass = createClass({
-    a: 1
+    a: 1,
   });
 
   const ChildClass = BaseClass.extend({
@@ -78,14 +78,14 @@ test('instanceOf', t => {
 test('extending nested data', t => {
   const BaseClass = createClass({
     a: {
-      b: 1
-    }
+      b: 1,
+    },
   });
 
   const ChildClass = BaseClass.extend({
     a: {
-      c: 2
-    }
+      c: 2,
+    },
   });
 
   const baseClass = new BaseClass();
@@ -99,11 +99,11 @@ test('extending nested data', t => {
 
 test('extending array fields', t => {
   const BaseClass = createClass({
-    a: [1, 2, 3]
+    a: [1, 2, 3],
   });
 
   const ChildClass = BaseClass.extend({
-    a: [4, 5, 6]
+    a: [4, 5, 6],
   });
 
   const baseClass = new BaseClass();
