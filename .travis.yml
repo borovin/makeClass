@@ -8,3 +8,4 @@ cache:
 script:
   - npm run test:ci
   - npm run lint -s
+  - npm run npm-check
