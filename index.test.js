@@ -113,3 +113,25 @@ test('extending array fields', t => {
   t.deepEqual(baseClass.a, [1, 2, 3]);
 });
 
+test('independent instances', t => {
+  const BaseClass = createClass({
+    a: {
+      b: 1,
+    },
+  });
+
+  const ChildClass = BaseClass.extend({
+    a: {
+      b: 2,
+    },
+  });
+
+  const baseClass = new BaseClass();
+  const childClass = new ChildClass();
+
+  childClass.a.b = 3;
+
+  t.is(baseClass.a.b, 1);
+  t.is(childClass.a.b, 3);
+});
+

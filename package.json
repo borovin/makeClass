@@ -10,29 +10,20 @@
   "homepage": "https://github.com/borovin/createClass",
   "scripts": {
     "test": "ava",
-    "test:coverage": "nyc --check-coverage --lines 100 ava",
-    "test:ci": "npm run test:coverage && nyc report --reporter=text-lcov | coveralls",
-    "lint": "eslint .",
-    "npm-check": "npm-check"
+    "test:coverage": "nyc --check-coverage --all --lines 100 ava",
+    "test:codestyle": "eslint .",
+    "test:deps": "npm-check"
   },
   "devDependencies": {
     "ava": "^0.15.2",
-    "coveralls": "^2.11.9",
     "eslint": "^2.0.0",
     "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.8.1",
+    "eslint-plugin-import": "^1.9.2",
     "npm-check": "^5.2.1",
     "nyc": "^6.4.4"
   },
   "dependencies": {
-    "lodash": "^4.13.1",
-    "lodash.merge": "^4.4.0"
-  },
-  "system": {
-    "npmIgnore": [
-      "devDependencies"
-    ],
-    "npmAlgorithm": "flat"
+    "lodash": "^4.13.1"
   },
   "author": "a@borovin.com",
   "license": "MIT"

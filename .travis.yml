@@ -6,6 +6,8 @@ cache:
   directories:
     - node_modules
 script:
-  - npm run test:ci
-  - npm run lint -s
-  - npm run npm-check
+  - npm run test:coverage -s
+  - npm run test:codestyle -s
+  - npm run test:deps -s
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
