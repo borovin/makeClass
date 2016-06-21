@@ -1,4 +1,4 @@
-const merge = require('lodash.merge');
+var merge = require('lodash.merge');
 
 module.exports = function createClass(...mixins) {
   const proto = merge({}, ...mixins);
