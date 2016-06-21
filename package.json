@@ -12,7 +12,8 @@
     "test": "ava",
     "test:coverage": "nyc --check-coverage --all --lines 100 ava",
     "test:codestyle": "eslint .",
-    "test:deps": "npm-check"
+    "test:deps": "npm-check",
+    "report:lcov": "nyc report --reporter=lcov > coverage.lcov"
   },
   "devDependencies": {
     "ava": "^0.15.2",
