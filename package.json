@@ -13,6 +13,7 @@
     "test:coverage": "nyc --check-coverage --all --lines 100 ava",
     "test:codestyle": "eslint .",
     "test:deps": "npm-check",
+    "fix:codestyle": "eslint . --fix",
     "report:lcov": "nyc report --reporter=lcov > coverage.lcov"
   },
   "devDependencies": {

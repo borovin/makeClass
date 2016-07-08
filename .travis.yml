@@ -5,7 +5,6 @@ sudo: false
 script:
   - npm run test:coverage -s
   - npm run test:codestyle -s
-  - npm run test:deps -s
 after_success:
   - npm run report:lcov
   - bash <(curl -s https://codecov.io/bash)
