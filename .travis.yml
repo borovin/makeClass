@@ -5,8 +5,13 @@ cache:
 node_js:
   - "6"
 sudo: false
+env:
+  - TEST_TYPE=coverage
+  - TEST_TYPE=codestyle
 script:
-  - npm run test:coverage -s
-  - npm run test:codestyle -s
+  - npm run test:$TEST_TYPE -s
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - |
+      if [ "$TEST_TYPE" == coverage ]; then
+        bash <(curl -s https://codecov.io/bash)
+      fi
