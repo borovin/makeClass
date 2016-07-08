@@ -9,23 +9,24 @@
   },
   "homepage": "https://github.com/borovin/createClass",
   "scripts": {
-    "test": "ava",
-    "test:coverage": "nyc --check-coverage --all --lines 100 ava",
+    "test": "jest",
+    "test:coverage": "jest --config=jestCoverage.json",
     "test:codestyle": "eslint .",
     "test:deps": "npm-check",
-    "fix:codestyle": "eslint . --fix",
-    "report:lcov": "nyc report --reporter=lcov > coverage.lcov"
+    "fix:codestyle": "eslint . --fix"
   },
   "devDependencies": {
-    "ava": "^0.15.2",
     "eslint": "^2.0.0",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.9.2",
-    "npm-check": "^5.2.1",
-    "nyc": "^6.4.4"
+    "jest": "^13.2.3",
+    "npm-check": "^5.2.1"
   },
   "dependencies": {
     "lodash": "^4.13.1"
+  },
+  "jest": {
+    "automock": false
   },
   "author": "a@borovin.com",
   "license": "MIT"

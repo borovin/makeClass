@@ -1,12 +1,37 @@
 /* eslint no-param-reassign: "off"*/
+/* eslint consistent-return: "off"*/
 
 const isPlainObject = require('lodash/isPlainObject');
 const isArray = require('lodash/isArray');
 const noop = require('lodash/noop');
 const forEach = require('lodash/forEach');
 const extend = require('lodash/extend');
-const merge = require('./merge');
-const fill = require('./fill');
+const cloneDeep = require('lodash/cloneDeep');
+const mergeWith = require('lodash/mergeWith');
+
+function merge(obj = {}, ...sources) {
+  return mergeWith(obj, ...sources, (objValue, sourceValue) => {
+    if (isArray(sourceValue)) {
+      return cloneDeep(sourceValue);
+    }
+  });
+}
+
+function fill(obj = {}, ...sources) {
+  const source = merge(...sources.reverse());
+
+  forEach(source, (value, key) => {
+    if (!obj[key]) {
+      obj[key] = cloneDeep(value);
+    }
+
+    if (isPlainObject(obj[key])) {
+      obj[key] = fill(obj[key], value);
+    }
+  });
+
+  return obj;
+}
 
 module.exports = function createClass(Parent, ...mixins) {
   let constructor;
