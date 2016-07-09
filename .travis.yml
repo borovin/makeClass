@@ -6,8 +6,8 @@ node_js:
   - "6"
 sudo: false
 env:
-  - TEST_TYPE=coverage
-  - TEST_TYPE=codestyle
+  - TEST_TYPE=coverage CACHE_NAME=JOB1
+  - TEST_TYPE=codestyle CACHE_NAME=JOB1
 script:
   - npm run test:$TEST_TYPE -s
 after_success:
