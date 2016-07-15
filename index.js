@@ -8,6 +8,7 @@ const forEach = require('lodash/forEach');
 const extend = require('lodash/extend');
 const cloneDeep = require('lodash/cloneDeep');
 const mergeWith = require('lodash/mergeWith');
+const clone = require('fastest-clone');
 
 function merge(obj = {}, ...sources) {
   return mergeWith(obj, ...sources, (objValue, sourceValue) => {
@@ -17,27 +18,11 @@ function merge(obj = {}, ...sources) {
   });
 }
 
-function fill(obj = {}, ...sources) {
-  const source = merge(...sources.reverse());
-
-  forEach(source, (value, key) => {
-    if (!obj[key]) {
-      obj[key] = cloneDeep(value);
-    }
-
-    if (isPlainObject(obj[key])) {
-      obj[key] = fill(obj[key], value);
-    }
-  });
-
-  return obj;
-}
-
 module.exports = function createClass(Parent, ...mixins) {
   let constructor;
   let proto;
-  const deepProto = {};
-  const flatProto = {};
+  const protoProperties = {};
+  const protoMethods = {};
 
   if (typeof Parent === 'function') {
     proto = merge({}, ...mixins);
@@ -47,17 +32,17 @@ module.exports = function createClass(Parent, ...mixins) {
   }
 
   forEach(proto, (prop, key) => {
-    if (isPlainObject(prop) || isArray(prop)) {
-      deepProto[key] = prop;
+    if (typeof prop === 'function') {
+      protoMethods[key] = prop;
     } else {
-      flatProto[key] = prop;
+      protoProperties[key] = prop;
     }
   });
 
   if (proto && proto.hasOwnProperty('constructor')) {
     constructor = proto.constructor;
   } else {
-    constructor = Parent;
+    constructor = Parent.__constructor || Parent;
   }
 
   function Child(...params) {
@@ -67,14 +52,15 @@ module.exports = function createClass(Parent, ...mixins) {
       return new Child(...params);
     }
 
-    fill(child, deepProto);
+    merge(child, Child.__properties);
+
     constructor.apply(this, params);
   }
 
   Child.prototype = Object.create(Parent.prototype);
 
   if (proto) {
-    extend(Child.prototype, flatProto);
+    extend(Child.prototype, protoMethods);
   }
 
   Child.prototype.constructor = Child;
@@ -83,6 +69,8 @@ module.exports = function createClass(Parent, ...mixins) {
     extend(...extensions) {
       return createClass(Child, ...extensions);
     },
+    __properties: protoProperties,
+    __constructor: constructor
   });
 
   return Child;

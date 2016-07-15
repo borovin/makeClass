@@ -23,6 +23,7 @@
     "npm-check": "^5.2.1"
   },
   "dependencies": {
+    "fastest-clone": "^1.0.2",
     "lodash": "^4.13.1"
   },
   "jest": {
