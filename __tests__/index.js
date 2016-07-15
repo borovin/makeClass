@@ -189,4 +189,60 @@ describe('createClass', () => {
 
     expect(grandchildClass.a).toBe(1);
   });
+
+  it('should extend properties with overridden parent constructor', () => {
+    const BaseClass = createClass({
+      a: 1,
+      b: 2,
+      constructor() {
+        this.e = 5;
+      },
+    });
+
+    const ChildClass = BaseClass.extend({
+      a: 2,
+      c: 3,
+    });
+
+    const GrandchildClass = ChildClass.extend({
+      a: 3,
+      d: 4,
+    });
+
+    const grandchildClass = new GrandchildClass();
+
+    expect(grandchildClass.a).toBe(3);
+    expect(grandchildClass.b).toBe(2);
+    expect(grandchildClass.c).toBe(3);
+    expect(grandchildClass.d).toBe(4);
+    expect(grandchildClass.e).toBe(5);
+  });
+
+  it('should extend properties with overridden child constructor', () => {
+    const BaseClass = createClass({
+      a: 1,
+      b: 2,
+    });
+
+    const ChildClass = BaseClass.extend({
+      a: 2,
+      c: 3,
+    });
+
+    const GrandchildClass = ChildClass.extend({
+      a: 3,
+      d: 4,
+      constructor() {
+        this.e = 5;
+      },
+    });
+
+    const grandchildClass = new GrandchildClass();
+
+    expect(grandchildClass.a).toBe(3);
+    expect(grandchildClass.b).toBe(2);
+    expect(grandchildClass.c).toBe(3);
+    expect(grandchildClass.d).toBe(4);
+    expect(grandchildClass.e).toBe(5);
+  });
 });
