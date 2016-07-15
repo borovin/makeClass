@@ -4,17 +4,17 @@ describe('createClass', () => {
   it('should extend with flat props', () => {
     const BaseClass = createClass({
       a: 1,
-      b: 2
+      b: 2,
     });
 
     const ChildClass = BaseClass.extend({
       a: 2,
-      c: 3
+      c: 3,
     });
 
     const GrandchildClass = ChildClass.extend({
       a: 3,
-      d: 4
+      d: 4,
     });
 
     const baseClass = new BaseClass();
@@ -194,9 +194,9 @@ describe('createClass', () => {
     const BaseClass = createClass({
       a: 1,
       b: 2,
-      constructor(){
+      constructor() {
         this.e = 5;
-      }
+      },
     });
 
     const ChildClass = BaseClass.extend({
@@ -206,7 +206,7 @@ describe('createClass', () => {
 
     const GrandchildClass = ChildClass.extend({
       a: 3,
-      d: 4
+      d: 4,
     });
 
     const grandchildClass = new GrandchildClass();
@@ -232,9 +232,9 @@ describe('createClass', () => {
     const GrandchildClass = ChildClass.extend({
       a: 3,
       d: 4,
-      constructor(){
+      constructor() {
         this.e = 5;
-      }
+      },
     });
 
     const grandchildClass = new GrandchildClass();

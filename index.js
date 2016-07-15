@@ -1,14 +1,12 @@
 /* eslint no-param-reassign: "off"*/
 /* eslint consistent-return: "off"*/
 
-const isPlainObject = require('lodash/isPlainObject');
 const isArray = require('lodash/isArray');
 const noop = require('lodash/noop');
 const forEach = require('lodash/forEach');
 const extend = require('lodash/extend');
 const cloneDeep = require('lodash/cloneDeep');
 const mergeWith = require('lodash/mergeWith');
-const clone = require('fastest-clone');
 
 function merge(obj = {}, ...sources) {
   return mergeWith(obj, ...sources, (objValue, sourceValue) => {
@@ -42,7 +40,7 @@ module.exports = function createClass(Parent, ...mixins) {
   if (proto && proto.hasOwnProperty('constructor')) {
     constructor = proto.constructor;
   } else {
-    constructor = Parent.__constructor || Parent;
+    constructor = Parent.classConstructor || Parent;
   }
 
   function Child(...params) {
@@ -52,7 +50,7 @@ module.exports = function createClass(Parent, ...mixins) {
       return new Child(...params);
     }
 
-    merge(child, Child.__properties);
+    merge(child, Child.classProperties);
 
     constructor.apply(this, params);
   }
@@ -69,8 +67,8 @@ module.exports = function createClass(Parent, ...mixins) {
     extend(...extensions) {
       return createClass(Child, ...extensions);
     },
-    __properties: protoProperties,
-    __constructor: constructor
+    classProperties: protoProperties,
+    classConstructor: constructor,
   });
 
   return Child;
