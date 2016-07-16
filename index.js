@@ -63,7 +63,7 @@ module.exports = function createClass(Parent, ...mixins) {
       return createClass(Child, ...extensions);
     },
     properties: protoProperties,
-    constructor: constructor,
+    constructor,
   });
 
   Child.properties = _.omit(Child.properties, _.keys(protoMethods));
