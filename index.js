@@ -14,8 +14,8 @@ function merge(obj = {}, ...sources) {
 module.exports = function createClass(Parent, ...mixins) {
   let constructor;
   let proto;
-  const protoProperties = {};
-  const protoMethods = {};
+  const properties = {};
+  const methods = {};
 
   if (typeof Parent === 'function') {
     proto = merge({}, ...mixins);
@@ -26,9 +26,9 @@ module.exports = function createClass(Parent, ...mixins) {
 
   _.forEach(proto, (prop, key) => {
     if (typeof prop === 'function') {
-      protoMethods[key] = prop;
+      methods[key] = prop;
     } else {
-      protoProperties[key] = prop;
+      properties[key] = prop;
     }
   });
 
@@ -53,7 +53,7 @@ module.exports = function createClass(Parent, ...mixins) {
   Child.prototype = Object.create(Parent.prototype);
 
   if (proto) {
-    _.extend(Child.prototype, protoMethods);
+    _.extend(Child.prototype, methods);
   }
 
   Child.prototype.constructor = Child;
@@ -62,11 +62,11 @@ module.exports = function createClass(Parent, ...mixins) {
     extend(...extensions) {
       return createClass(Child, ...extensions);
     },
-    properties: protoProperties,
+    properties,
     constructor,
   });
 
-  Child.properties = _.omit(Child.properties, _.keys(protoMethods));
+  Child.properties = _.omit(Child.properties, _.keys(methods));
 
   return Child;
 };
