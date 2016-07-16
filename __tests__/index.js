@@ -248,13 +248,13 @@ describe('createClass', () => {
 
   it('should change property on method after extending', () => {
     const BaseClass = createClass({
-      a: 1
+      a: 1,
     });
 
     const ChildClass = BaseClass.extend({
       a() {
         return 1;
-      }
+      },
     });
 
     const childClass = new ChildClass();
