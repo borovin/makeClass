@@ -1,17 +1,12 @@
 /* eslint no-param-reassign: "off"*/
 /* eslint consistent-return: "off"*/
 
-const isArray = require('lodash/isArray');
-const noop = require('lodash/noop');
-const forEach = require('lodash/forEach');
-const extend = require('lodash/extend');
-const cloneDeep = require('lodash/cloneDeep');
-const mergeWith = require('lodash/mergeWith');
+const _ = require('lodash');
 
 function merge(obj = {}, ...sources) {
-  return mergeWith(obj, ...sources, (objValue, sourceValue) => {
-    if (isArray(sourceValue)) {
-      return cloneDeep(sourceValue);
+  return _.mergeWith(obj, ...sources, (objValue, sourceValue) => {
+    if (_.isArray(sourceValue)) {
+      return _.cloneDeep(sourceValue);
     }
   });
 }
@@ -19,28 +14,28 @@ function merge(obj = {}, ...sources) {
 module.exports = function createClass(Parent, ...mixins) {
   let constructor;
   let proto;
-  const protoProperties = {};
-  const protoMethods = {};
+  const properties = {};
+  const methods = {};
 
   if (typeof Parent === 'function') {
     proto = merge({}, ...mixins);
   } else {
     proto = merge({}, Parent, ...mixins);
-    Parent = noop;
+    Parent = _.noop;
   }
 
-  forEach(proto, (prop, key) => {
+  _.forEach(proto, (prop, key) => {
     if (typeof prop === 'function') {
-      protoMethods[key] = prop;
+      methods[key] = prop;
     } else {
-      protoProperties[key] = prop;
+      properties[key] = prop;
     }
   });
 
   if (proto && proto.hasOwnProperty('constructor')) {
     constructor = proto.constructor;
   } else {
-    constructor = Parent.classConstructor || Parent;
+    constructor = Parent.constructor || Parent;
   }
 
   function Child(...params) {
@@ -50,7 +45,7 @@ module.exports = function createClass(Parent, ...mixins) {
       return new Child(...params);
     }
 
-    merge(child, Child.classProperties);
+    merge(child, Child.properties);
 
     constructor.apply(this, params);
   }
@@ -58,7 +53,7 @@ module.exports = function createClass(Parent, ...mixins) {
   Child.prototype = Object.create(Parent.prototype);
 
   if (proto) {
-    extend(Child.prototype, protoMethods);
+    _.extend(Child.prototype, methods);
   }
 
   Child.prototype.constructor = Child;
@@ -67,9 +62,11 @@ module.exports = function createClass(Parent, ...mixins) {
     extend(...extensions) {
       return createClass(Child, ...extensions);
     },
-    classProperties: protoProperties,
-    classConstructor: constructor,
+    properties,
+    constructor,
   });
+
+  Child.properties = _.omit(Child.properties, _.keys(methods));
 
   return Child;
 };
