@@ -1,19 +1,12 @@
 /* eslint no-param-reassign: "off"*/
 /* eslint consistent-return: "off"*/
 
-const isArray = require('lodash/isArray');
-const noop = require('lodash/noop');
-const forEach = require('lodash/forEach');
-const extend = require('lodash/extend');
-const cloneDeep = require('lodash/cloneDeep');
-const mergeWith = require('lodash/mergeWith');
-const omit = require('lodash/omit');
-const keys = require('lodash/keys');
+const _ = require('lodash');
 
 function merge(obj = {}, ...sources) {
-  return mergeWith(obj, ...sources, (objValue, sourceValue) => {
-    if (isArray(sourceValue)) {
-      return cloneDeep(sourceValue);
+  return _.mergeWith(obj, ...sources, (objValue, sourceValue) => {
+    if (_.isArray(sourceValue)) {
+      return _.cloneDeep(sourceValue);
     }
   });
 }
@@ -28,10 +21,10 @@ module.exports = function createClass(Parent, ...mixins) {
     proto = merge({}, ...mixins);
   } else {
     proto = merge({}, Parent, ...mixins);
-    Parent = noop;
+    Parent = _.noop;
   }
 
-  forEach(proto, (prop, key) => {
+  _.forEach(proto, (prop, key) => {
     if (typeof prop === 'function') {
       protoMethods[key] = prop;
     } else {
@@ -60,7 +53,7 @@ module.exports = function createClass(Parent, ...mixins) {
   Child.prototype = Object.create(Parent.prototype);
 
   if (proto) {
-    extend(Child.prototype, protoMethods);
+    _.extend(Child.prototype, protoMethods);
   }
 
   Child.prototype.constructor = Child;
@@ -73,7 +66,7 @@ module.exports = function createClass(Parent, ...mixins) {
     constructor: constructor,
   });
 
-  Child.properties = omit(Child.properties, keys(protoMethods));
+  Child.properties = _.omit(Child.properties, _.keys(protoMethods));
 
   return Child;
 };
