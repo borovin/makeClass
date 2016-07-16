@@ -245,4 +245,20 @@ describe('createClass', () => {
     expect(grandchildClass.d).toBe(4);
     expect(grandchildClass.e).toBe(5);
   });
+
+  it('should change property on method after extending', () => {
+    const BaseClass = createClass({
+      a: 1
+    });
+
+    const ChildClass = BaseClass.extend({
+      a() {
+        return 1;
+      }
+    });
+
+    const childClass = new ChildClass();
+
+    expect(childClass.a()).toBe(1);
+  });
 });

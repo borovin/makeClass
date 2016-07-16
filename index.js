@@ -7,6 +7,8 @@ const forEach = require('lodash/forEach');
 const extend = require('lodash/extend');
 const cloneDeep = require('lodash/cloneDeep');
 const mergeWith = require('lodash/mergeWith');
+const omit = require('lodash/omit');
+const keys = require('lodash/keys');
 
 function merge(obj = {}, ...sources) {
   return mergeWith(obj, ...sources, (objValue, sourceValue) => {
@@ -40,7 +42,7 @@ module.exports = function createClass(Parent, ...mixins) {
   if (proto && proto.hasOwnProperty('constructor')) {
     constructor = proto.constructor;
   } else {
-    constructor = Parent.classConstructor || Parent;
+    constructor = Parent.constructor || Parent;
   }
 
   function Child(...params) {
@@ -50,7 +52,7 @@ module.exports = function createClass(Parent, ...mixins) {
       return new Child(...params);
     }
 
-    merge(child, Child.classProperties);
+    merge(child, Child.properties);
 
     constructor.apply(this, params);
   }
@@ -67,9 +69,11 @@ module.exports = function createClass(Parent, ...mixins) {
     extend(...extensions) {
       return createClass(Child, ...extensions);
     },
-    classProperties: protoProperties,
-    classConstructor: constructor,
+    properties: protoProperties,
+    constructor: constructor,
   });
+
+  Child.properties = omit(Child.properties, keys(protoMethods));
 
   return Child;
 };
