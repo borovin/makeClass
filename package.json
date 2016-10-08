@@ -20,7 +20,7 @@
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.9.2",
     "jest": "^13.2.3",
-    "npm-check": "^5.2.1"
+    "npm-check": "^5.4.0"
   },
   "dependencies": {
     "lodash": "^4.13.1"
